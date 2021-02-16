@@ -26,20 +26,27 @@ class FormularioCadastro extends Component {
     this.preco = evento.target.value;
   }
 
-  handleMudancaLucro(evento){
-    evento.stopPropagation();
-    this.lucro = ((this.quantidade*this.cotacao)-(this.quantidade*this.preco));
+  handleMudancaLucro(evento) {
+    this.lucro = (this.quantidade * this.cotacao - this.quantidade * this.preco);
   }
 
-  handleMudancaPorcentagem(evento){
-    evento.stopPropagation();
-    this.porcentagem = (this.lucro/(this.quantidade*this.preco))
+  handleMudancaPorcentagem(evento) {
+    this.porcentagem = ((this.lucro / (this.quantidade * this.preco)*100));
   }
 
   criarCard(evento) {
     evento.preventDefault();
     evento.stopPropagation();
-    this.props.criarCard(this.acao, this.quantidade, this.preco, this.cotacao, this.lucro, this.porcentagem);
+    this.handleMudancaLucro();
+    this.handleMudancaPorcentagem();
+    this.props.criarCard(
+      this.acao,
+      this.quantidade,
+      this.preco,
+      this.cotacao,
+      this.lucro,
+      this.porcentagem
+    );
   }
 
   render() {
@@ -71,7 +78,9 @@ class FormularioCadastro extends Component {
           />
           <div>
             <button className="botao">Salvar</button>
-            <button className="botao" type="reset">Cancelar</button>
+            <button className="botao" type="reset">
+              Cancelar
+            </button>
           </div>
         </section>
       </form>
